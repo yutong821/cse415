@@ -1,0 +1,34 @@
+1. five_x_cubed_plus_2(3)	
+five_x_cubed_plus_2(30)
+five_x_cubed_plus_2(1)
+
+137
+135002
+7
+
+2. triple_up([2, 5, 1.5, 100, 3, 8, 7, 1, 1, 0, -2])
+triple_up([5, 8, 9, 10, 788, 23, 4, 7, 0, 24]) 
+triple_up([5, 6, 7, 8])
+
+[[2, 5, 1.5], [100, 3, 8], [7, 1, 1], [0, -2]]
+[[5, 8, 9], [10, 788, 23], [4, 7, 0], [24]]
+[[5, 6, 7], [8]]
+
+
+3.mystery_code("abc Iz th1s Secure? n0, no, 9!")
+mystery_code("what do y0u Wantt2 kNow? An9thin9! I0!")	
+mystery_code("Hello! I 0m a G00d PERson!")
+ 
+VWX dU OC1N nZXPMZ? I0, IJ, 9!
+RCVO YJ T0P rVIOO2 FiJR? vI9OCDI9! d0!
+cZGGJ! d 0H V b00Y kzmNJI!
+
+4.future_tense(['Yesterday', 'I', 'ate', 'pasta', 'and', 'today', 'I', 'am', 'having', 'soup']) 
+
+future_tense(["I", "am", "taking", "CSE", "415","now", "!", "It", "is", "a", "fun", "class", "."])
+
+future_tense(["This", "class", "is", "fun"])
+
+['Tomorrow', 'I', 'will', 'eat', 'pasta', 'and', 'tomorrow', 'I', 'will', ' be', 'having', 'soup']
+['I', 'will', ' be', 'taking', 'CSE', '415', 'tomorrow', '!', 'It', 'will', 'be', 'a', 'fun', 'class', '.']
+['This', 'class', 'will', 'be', 'fun']

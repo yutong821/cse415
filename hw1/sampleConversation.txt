@@ -1,0 +1,63 @@
+0A: Yoto: My name is Yoto, and I am waitress in our local resuanrant. I was programed by Yutong.If you don't like the way I deal, contact her at yliu21@uw.edu.Hello. How can I help you? 
+
+0B: Tim: My name is Tim. I am hungry. I was programmed by Tianqi Fang. If you have any suggestions about me, you can contact him at fang2018@uw.edu I have a reservation at your restaurant.
+
+1A: Yoto: Hello. How can I help you? 
+
+1B: Tim: I have a reservation at your restaurant.
+
+2A: Yoto: Please wait. How many people for you group?
+
+2B: Tim: 2
+
+3A: Yoto: Follow me. There is your table.
+
+3B: Tim: May I have the menu please.
+
+4A: Yoto: There is today's menu. what do want first?
+
+4B: Tim: Any recommendation?
+
+5A: Yoto: Do you want drinks?
+
+5B: Tim: What kinds of drinks do you have?
+
+6A: Yoto: Do you want a cup of soda?
+
+6B: Tim: Sure. Any other recommendation in your restaurant?
+
+7A: Yoto: Do you want appetizers?
+
+7B: Tim: What kinds of appetizers do you have?
+
+8A: Yoto: Do you want a plate of fresh oyster?
+
+8B: Tim: Yes, please. Any other recommendation?
+
+9A: Yoto: Do you want main courses?
+
+9B: Tim: What kinds of main courses do you have?
+
+10A: Yoto: Do you want the vege as your main dishes?
+
+10B: Tim: No. Any other main dishes?
+
+11A: Yoto: Do you want the meat as your main dishes?
+
+11B: Tim: I love meat. Do you have pork?
+
+12A: Yoto: Sorry, we do not have that. Any other meat main dishes? How about chicken
+
+12B: Tim: I love meat. Do you have beef?
+
+13A: Yoto: Do you want the combo specical  Spencer Steak
+
+13B: Tim: Ok. I will do that. Any other recommendation?
+
+14A: Yoto: Do you want desserts?
+
+14B: Tim: What kinds of desserts do you have?
+
+15A: Yoto: Do you want a small bowl of icecream
+
+15B: Tim: Yes. Can I order more?
