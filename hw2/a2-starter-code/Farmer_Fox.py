@@ -68,7 +68,7 @@ class State():
     # Performs an appropriately deep copy of a state,
     # for use by operators in creating new states.
     news = State({})
-    news.d['passengers']=[self.d['people'][F_F_C_G][:] for F_F_C_G in [farmer, fox, chicken,grain]]
+    news.d['passengers']=[self.d['passengers'][F_F_C_G][:] for F_F_C_G in [farmer, fox, chicken,grain]]
     news.d['boat'] = self.d['boat']
     return news 
 
@@ -76,7 +76,7 @@ class State():
     '''Tests whether it's legal to move the boat and take
      famer, fox, chicken, grain.'''
     side = self.d['boat'] # Where the boat is.
-    p = self.d['people']
+    p = self.d['passengers']
 
     # famer always exist
     if fa<1:
@@ -111,7 +111,7 @@ class State():
      m missionaries and c cannibals.'''
     news = self.copy()      # start with a deep copy.
     side = self.d['boat']         # where is the boat?
-    p = news.d['people']          # get the array of arrays of people.
+    p = news.d['passengers']          # get the array of arrays of people.
     p[M][side] = p[M][side]-m     # Remove people from the current side.
     p[C][side] = p[C][side]-c
     p[M][1-side] = p[M][1-side]+m # Add them at the other side.
@@ -121,7 +121,7 @@ class State():
 
 def goal_test(s):
   '''If all Ms and Cs are on the right, then s is a goal state.'''
-  p = s.d['people']
+  p = s.d['passengers']
   return (p[M][RIGHT]==3 and p[C][RIGHT]==3)
 
 def goal_message(s):
