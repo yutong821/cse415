@@ -12,16 +12,21 @@ the Farmer, Fox, Chicken, and Grain.
 # Put your formulation of the Farmer-Fox-Chicken-and-Grain problem here.
 # Be sure your name, uwnetid, and 7-digit student number are given above in 
 # the format shown.
+SOLUZION_VERSION = "2.0"
+PROBLEM_NAME = "Farmer and fox"
+PROBLEM_VERSION = "1.0"
+PROBLEM_AUTHORS = ['Yutong']
+PROBLEM_CREATION_DATE = "10/11/2019"
 
 
 PROBLEM_DESC=\
 ''' "A farmer needs to take a fox, chicken and sack of grain across a river using a small
 boat. He can only take one of the three items in the boat with him at one time. The
-fox must never be left alone with the chicken, and the chicken must never be left alone
+fox must never be LEFT alone with the chicken, and the chicken must never be LEFT alone
 with the grain. How can he get everything across the river?" '''
 
 
-LEFT=0 # same idea for left side of river
+LEFT=0 # same idea for LEFT side of river
 RIGHT=1 # etc.
 farmer = 0
 fox = 1
@@ -32,8 +37,8 @@ class State():
 
   def __init__(self, d=None):
     if d==None: 
-      d = {'passengers':[[0,0],[0,0],[0,0],[0,0]]
-           'boat':LEFT,
+      d = {'passengers':[[0,0],[0,0],[0,0],[0,0]],
+           'boat':LEFT
            }
     self.d = d
 
@@ -45,18 +50,18 @@ class State():
   def __str__(self):
     # Produces a textual description of a state.
     p = self.d['passengers']
-    # left side
-    txt = "\n Farmer on left:"+str(p[farmer][LEFT])+"\n"
-    txt += " Fox on left:"+str(p[fox][LEFT])+"\n"
-    txt += "   Chicken on right:"+str(p[chicken][LEFT])+"\n"
-    txt += "   grain on right:"+str(p[grain][LEFT])+"\n"
+    # LEFT side
+    txt = "\n Farmer on LEFT:"+str(p[farmer][LEFT])+"\n"
+    txt += " Fox on LEFT:"+str(p[fox][LEFT])+"\n"
+    txt += " Chicken on LEFT:"+str(p[chicken][LEFT])+"\n"
+    txt += " grain on LEFT:"+str(p[grain][LEFT])+"\n"
     # right side
-    txt = "\n Farmer on left:"+str(p[farmer][RIGHT])+"\n"
-    txt += " Fox on left:"+str(p[fox][RIGHT])+"\n"
-    txt += "   Chicken on right:"+str(p[chicken][RIGHT])+"\n"
-    txt += "   grain on right:"+str(p[grain][RIGHT])+"\n"
+    txt += "\n Farmer on right:"+str(p[farmer][RIGHT])+"\n"
+    txt += " Fox on right:"+str(p[fox][RIGHT])+"\n"
+    txt += " Chicken on right:"+str(p[chicken][RIGHT])+"\n"
+    txt += " grain on right:"+str(p[grain][RIGHT])+"\n"
     # boat
-    side='left'
+    side='LEFT'
     if self.d['boat']==1: side='right'
     txt += " boat is on the "+side+".\n"
     return txt
@@ -68,64 +73,86 @@ class State():
     # Performs an appropriately deep copy of a state,
     # for use by operators in creating new states.
     news = State({})
-    news.d['passengers']=[self.d['passengers'][F_F_C_G][:] for F_F_C_G in [farmer, fox, chicken,grain]]
+    news.d['passengers']=[self.d['passengers'][F_F_C_G][:] for F_F_C_G in [0,1,2,3]]
     news.d['boat'] = self.d['boat']
     return news 
 
   def can_move(self,fa,fo,c,g):
     '''Tests whether it's legal to move the boat and take
-     famer, fox, chicken, grain.'''
+     farmer, fox, chicken, grain.'''
     side = self.d['boat'] # Where the boat is.
     p = self.d['passengers']
 
-    # famer always exist
+	# farmer always exist
     if fa<1:
-    	return False;
+        return False
 
-    # famer fox chicken grain > available_passengers
-    if (p[famer][side] < fa) or (p[fox][side] < fo) or (p[chicken][side] <c) or (p[grain][side] <g):
-    	return False
+    # farmer fox chicken grain > available_passengers
+    if (p[farmer][side] < fa) or (p[fox][side] < fo) or (p[chicken][side] <c) or (p[grain][side] <g):
+        return False
 
     # Fox and chicken, chicken and grain, cannot stay on the same side
     if fo == 1:
-    	if (p[fox][side] == p[chicken][side]) and (p[chicken][side] != p[grain][side]) and (p[famer][side] == p[fox][side]):
+    	if (p[fox][side] == p[chicken][side]) and (p[fox][side] != p[grain][side]) and (p[fox][1-side] == p[farmer][side]):
     		return False
-    	if (p[chicken][side] == p[grain][side]) and [p[chicken][side] != p[fox][side]] and (p[famer][side] == p[fox][side]):
+    	if (p[fox][side] == p[grain][side]) and (p[fox][side] != p[chicken][side]) and (p[farmer][side] == p[fox][side]):
     		return False
-    if c == 1:
-    	if (p[fox][side] == p[chicken][side]) and (p[chicken][side] != p[grain][side]) and (p[famer][side] == p[chicken][side]):
+    elif c == 1:
+    	if (p[chicken][side] == p[fox][side]) and (p[chicken][side] != p[grain][side]) and (p[farmer][side] == p[chicken][side]):
     		return False
-    	if (p[chicken][side] == p[grain][side]) and [p[chicken][side] != p[fox][side]] and (p[famer][side] == p[chicken][side]):
+    	if (p[chicken][side] == p[grain][side]) and (p[chicken][side] != p[fox][side]) and (p[farmer][1-side] == p[chicken][side]):
     		return False
-    if g == 1:
-    	if (p[fox][side] == p[chicken][side]) and (p[chicken][side] != p[grain][side]) and (p[famer][side] == p[grain][side]):
+    elif g == 1:
+    	if (p[grain][side] == p[chicken][side]) and (p[grain][side] != p[fox][side]) and (p[farmer][1-side] == p[grain][side]):
     		return False
-    	if (p[chicken][side] == p[grain][side]) and [p[chicken][side] != p[fox][side]] and (p[famer][side] == p[grain][side]):
+    	if (p[grain][side] == p[fox][side]) and (p[grain][side] != p[chicken][side]) and (p[farmer][side] == p[grain][side]):
     		return False
+
+    # if(fo==1): 
+    #   if(p[fox][1-LEFT] == p[chicken][LEFT] and p[fox][1-LEFT] != p[grain][LEFT] and p[farmer][LEFT] == p[fox][1-LEFT]):
+    #     return False
+    #   if(p[chicken][LEFT] == p[grain][LEFT] and p[chicken][LEFT] != p[fox][1-LEFT]  and p[farmer][LEFT] == p[chicken][LEFT]):
+    #     return False
+    # elif(c==1): 
+    #   if(p[fox][LEFT] == p[chicken][1-LEFT]  and p[fox][LEFT] != p[grain][LEFT]  and p[fox][LEFT] == p[farmer][LEFT]):
+    #     return False
+    #   if(p[chicken][1-LEFT] == p[grain][LEFT] and p[chicken][1-LEFT] != p[fox][LEFT]  and p[chicken][1-LEFT] == p[farmer][LEFT]):
+    #     return False
+    # elif(g==1):
+    #   if(p[chicken][LEFT] == p[grain][1-LEFT] and p[chicken][LEFT] != p[fox][LEFT]   and p[chicken][LEFT] == p[farmer][LEFT]):
+    #     return False
+    #   if(p[fox][LEFT] == p[chicken][LEFT]  and p[fox][LEFT] != p[grain][1-LEFT] and p[fox][LEFT] == p[farmer][LEFT]):
+    #     return False
     return True
 
 
-  def move(self,m,c):
+  def move(self,fa,fo,c,g):
     '''Assuming it's legal to make the move, this computes
      the new state resulting from moving the boat carrying
      m missionaries and c cannibals.'''
     news = self.copy()      # start with a deep copy.
     side = self.d['boat']         # where is the boat?
-    p = news.d['passengers']          # get the array of arrays of people.
-    p[M][side] = p[M][side]-m     # Remove people from the current side.
-    p[C][side] = p[C][side]-c
-    p[M][1-side] = p[M][1-side]+m # Add them at the other side.
-    p[C][1-side] = p[C][1-side]+c
+    p = news.d['passengers']          # get the array of arrays of passengers.
+    # Remove passengers from the current side.
+    p[farmer][side] = p[farmer][side] - fa
+    p[fox][side] = p[fox][side] - fo
+    p[chicken][side] = p[chicken][side] - c
+    p[grain][side] = p[grain][side] - g
+    # Add them at the other side.
+    p[farmer][1-side] = p[farmer][1-side] + fa
+    p[fox][1-side] = p[fox][1-side] + fo
+    p[chicken][1-side] = p[chicken][1-side] + c
+    p[grain][1-side] = p[grain][1-side] + g
     news.d['boat'] = 1-side       # Move the boat itself.
     return news
 
 def goal_test(s):
   '''If all Ms and Cs are on the right, then s is a goal state.'''
   p = s.d['passengers']
-  return (p[M][RIGHT]==3 and p[C][RIGHT]==3)
+  return (p[farmer][RIGHT]==1 and p[fox][RIGHT]==1 and p[chicken][RIGHT]==1 and p[grain][RIGHT])
 
 def goal_message(s):
-  return "Congratulations on successfully guiding the missionaries and cannibals across the river!"
+  return "Congratulations on successfully transfer all passengers from LEFT to right!"
 
 class Operator:
   def __init__(self, name, precond, state_transf):
@@ -141,17 +168,17 @@ class Operator:
 #</COMMON_CODE>
 
 #<INITIAL_STATE>
-CREATE_INITIAL_STATE = lambda : State(d={'people':[[3, 0], [3, 0]], 'boat':LEFT })
+CREATE_INITIAL_STATE = lambda : State(d={'passengers':[[1, 0], [1, 0], [1, 0], [1, 0]], 'boat':LEFT })
 #</INITIAL_STATE>
 
 #<OPERATORS>
-MC_combinations = [(1,0),(2,0),(3,0),(1,1),(2,1)]
+Ffcg_combinations = [(1,0,0,0), (1,1,0,0), (1,0,1,0), (1,0,0,1)]
 
 OPERATORS = [Operator(
-  "Cross the river with "+str(m)+" missionaries and "+str(c)+" cannibals",
-  lambda s, m1=m, c1=c: s.can_move(m1,c1),
-  lambda s, m1=m, c1=c: s.move(m1,c1) ) 
-  for (m,c) in MC_combinations]
+  "Cross the river with "+str(fa)+" farmer and "+ str(fo)+" fox and " + str(c)+ " chicken and" +str(g)+ " grain",
+  lambda s, Fa=fa, Fo=fo, Ch=c, Gr=g: s.can_move(Fa,Fo,Ch,Gr),
+  lambda s, Fa=fa, Fo=fo, Ch=c, Gr=g: s.move(Fa,Fo,Ch,Gr)) 
+  for (fa,fo,c,g) in Ffcg_combinations]
 #</OPERATORS>
 
 #<GOAL_TEST> (optional)
