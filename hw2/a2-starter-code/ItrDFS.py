@@ -15,8 +15,9 @@ Iterative Depth-First Search of a problem space.
 import sys
 
 if sys.argv==[''] or len(sys.argv)<2:
-#  import EightPuzzle as Problem
-  import TowersOfHanoi as Problem
+ # import Missionaries as Problem
+  # import TowersOfHanoi as Problem
+  import Farmer_Fox as Problem
 else:
   import importlib
   Problem = importlib.import_module(sys.argv[1])

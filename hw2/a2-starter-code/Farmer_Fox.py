@@ -90,39 +90,17 @@ class State():
     # farmer fox chicken grain > available_passengers
     if (p[farmer][side] < fa) or (p[fox][side] < fo) or (p[chicken][side] <c) or (p[grain][side] <g):
         return False
+        
+    famer_remaining = p[farmer][side] - fa
+    fox_remaining = p[fox][side] - fo
+    c_remaining = p[chicken][side] - c
+    g_remaining = p[grain][side] - g
 
-    # Fox and chicken, chicken and grain, cannot stay on the same side
-    if fo == 1:
-    	if (p[fox][side] == p[chicken][side]) and (p[fox][side] != p[grain][side]) and (p[fox][1-side] == p[farmer][side]):
-    		return False
-    	if (p[fox][side] == p[grain][side]) and (p[fox][side] != p[chicken][side]) and (p[farmer][side] == p[fox][side]):
-    		return False
-    elif c == 1:
-    	if (p[chicken][side] == p[fox][side]) and (p[chicken][side] != p[grain][side]) and (p[farmer][side] == p[chicken][side]):
-    		return False
-    	if (p[chicken][side] == p[grain][side]) and (p[chicken][side] != p[fox][side]) and (p[farmer][1-side] == p[chicken][side]):
-    		return False
-    elif g == 1:
-    	if (p[grain][side] == p[chicken][side]) and (p[grain][side] != p[fox][side]) and (p[farmer][1-side] == p[grain][side]):
-    		return False
-    	if (p[grain][side] == p[fox][side]) and (p[grain][side] != p[chicken][side]) and (p[farmer][side] == p[grain][side]):
-    		return False
+    if (famer_remaining == 0) and (fox_remaining ==1) and (c_remaining ==1) and (g_remaining == 0):
+      return False
+    if (famer_remaining == 0) and (fox_remaining ==0) and (c_remaining == 1) and (g_remaining ==1):
+      return False
 
-    # if(fo==1): 
-    #   if(p[fox][1-LEFT] == p[chicken][LEFT] and p[fox][1-LEFT] != p[grain][LEFT] and p[farmer][LEFT] == p[fox][1-LEFT]):
-    #     return False
-    #   if(p[chicken][LEFT] == p[grain][LEFT] and p[chicken][LEFT] != p[fox][1-LEFT]  and p[farmer][LEFT] == p[chicken][LEFT]):
-    #     return False
-    # elif(c==1): 
-    #   if(p[fox][LEFT] == p[chicken][1-LEFT]  and p[fox][LEFT] != p[grain][LEFT]  and p[fox][LEFT] == p[farmer][LEFT]):
-    #     return False
-    #   if(p[chicken][1-LEFT] == p[grain][LEFT] and p[chicken][1-LEFT] != p[fox][LEFT]  and p[chicken][1-LEFT] == p[farmer][LEFT]):
-    #     return False
-    # elif(g==1):
-    #   if(p[chicken][LEFT] == p[grain][1-LEFT] and p[chicken][LEFT] != p[fox][LEFT]   and p[chicken][LEFT] == p[farmer][LEFT]):
-    #     return False
-    #   if(p[fox][LEFT] == p[chicken][LEFT]  and p[fox][LEFT] != p[grain][1-LEFT] and p[fox][LEFT] == p[farmer][LEFT]):
-    #     return False
     return True
 
 

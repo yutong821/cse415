@@ -1,7 +1,16 @@
+'''UCS.py
+by Ye Jin
+
+Assignment 2, in CSE 415, Spring 2019.
+ 
+This file contains my uniform cost solution.
+'''
+
 ''' starter-file-for.py  CHANGE THIS WHEN YOU EDIT IT, TO UCS.py
-by  (YOUR NAME HERE)
+by  Ye Jin
 
 PUT YOUR ADDITIONAL COMMENTS HERE, SUCH AS EMAIL ADDRESS, VERSION INFO, ETC>
+yjin2
 
 STUDENTS: COMPLETE THE IMPLEMENTATION OF UCS.py BY WRITING CODE WHERE
 INDICATED BELOW IN THE COMMENTS STARTING WITH "***STUDENTS".
@@ -32,7 +41,7 @@ else:
   import importlib
   Problem = importlib.import_module(sys.argv[1])
 
-print("\nWelcome to UCS, by YOUR NAME HERE!")
+print("\nWelcome to UCS, by Ye Jin!")
 
 COUNT = None # Number of nodes expanded.
 MAX_OPEN_LENGTH = None # How long OPEN ever gets.
@@ -128,6 +137,7 @@ def UCS(initial_state):
   global g, COUNT, BACKLINKS, MAX_OPEN_LENGTH, CLOSED, TOTAL_COST
   CLOSED = []
   BACKLINKS[initial_state] = None
+  TOTAL_COST = 0
   # The "Step" comments below help relate UCS's implementation to
   # those of Depth-First Search and Breadth-First Search.
 
@@ -138,7 +148,7 @@ def UCS(initial_state):
   g[initial_state]=0.0
 
 # STEP 2. If OPEN is empty, output “DONE” and stop.
-  while OPEN != []: # ***STUDENTS CHANGE THIS CONDITION***
+  while (len(OPEN) != 0): # ***STUDENTS CHANGE THIS CONDITION***
     # LEAVE THE FOLLOWING CODE IN PLACE TO INSTRUMENT AND/OR DEBUG YOUR IMPLEMENTATION
     if VERBOSE: report(OPEN, CLOSED, COUNT)
     if len(OPEN)>MAX_OPEN_LENGTH: MAX_OPEN_LENGTH = len(OPEN)
@@ -153,36 +163,42 @@ def UCS(initial_state):
 
     if Problem.GOAL_TEST(S):
       # ***STUDENTS CHANGE THE BODY OF THIS IF.***
-      # HANDLE THE BACKTRACING, RECORDING THE SOLUTION AND TOTAL COST,
+      #HANDLE THE BACKTRACING, RECORDING THE SOLUTION AND TOTAL COST,
       # AND RETURN THE SOLUTION PATH, TOO.
+      #BACKLINKS[S] = backtrace(S)
       TOTAL_COST = P
-      return backtrace(S)
+      
+      return(backtrace(S))
     COUNT += 1
 
 # STEP 4. Generate each successor of S
 #         and if it is already on CLOSED, delete the new instance.
-  
+    #L = []
+    cost = P
+    for op in Problem.OPERATORS:
+      if op.precond(S):
+        new_state = op.state_transf(S)
+        cost_new = cost + S.edge_distance(new_state)      
 
+        if (new_state in OPEN):
+          cost_old = OPEN[new_state]
+          if cost_new < cost_old:
+            del OPEN[new_state]
+            OPEN.insert(new_state,cost_new)
+            BACKLINKS[new_state] = S
+            del new_state
+          else:
+            del new_state
+        elif (new_state in CLOSED):
+            del new_state
+        else:
+          OPEN.insert(new_state,cost_new)
+          BACKLINKS[new_state] = S
+        
    # ***STUDENTS IMPLEMENT THE GENERATION AND HANDLING OF SUCCESSORS HERE,
    # USING THE GIVEN PRIORITY QUEUE FOR THE OPEN LIST, AND
    # DETERMINING THE SHORTEST DISTANCE KNOWN SO FAR FROM THE INITIAL STATE TO
    # EACH SUCCESSOR.***
-
-    for op in Problem.OPERATORS:
-      if op.precond(S):
-        new_state = op.state_transf(S)
-        new_cost = P + S.edge_distance(new_state)
-        if new_state in OPEN:
-          if new_cost < OPEN[new_state]:
-            del OPEN[new_state]
-            OPEN.insert(new_state, new_cost)
-            BACKLINKS[new_state] = S
-        else:
-            try:
-              CLOSED[new_state]
-            except:
-              OPEN.insert(new_state, new_cost)
-              BACKLINKS[new_state] = S
 
   # STEP 6. Go to Step 2.
   return None  # No more states on OPEN, and no goal reached.
@@ -192,7 +208,7 @@ def print_state_queue(name, q):
   print(str(q))
 
 def backtrace(S):
-  global BACKLINKS
+  global BACKLINKS, TOTAL_COST
   path = []
   while S:
     path.append(S)
@@ -201,6 +217,7 @@ def backtrace(S):
   print("Solution path: ")
   for s in path:
     print(s)
+  print("The total min cost is: "+str(TOTAL_COST))
   return path
   
 def report(open, closed, count):
