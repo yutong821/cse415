@@ -10,18 +10,18 @@ if len(sys.argv) < 2:
   print("python3 agent_checker.py robthomp_TTS_agent")
   exit(0)
 
-#try to import agent  
+#try to import agent
 try:
 	user_player = sys.argv[1]
 	Player = importlib.import_module(user_player)
 except Exception as e:
 	print("An exception happened when trying to import your agent:")
 	print(e)
-	exit(0) 
+	exit(0)
 
 #start checking
 print("""This file will check that your agent has the correct function definitions and can perform
-basic operations. Passing this checker does not guarantee your agent will get full points 
+basic operations. Passing this checker does not guarantee your agent will get full points
 during grading but it is a good start.""")
 
 board = [
@@ -39,7 +39,7 @@ try:
 	state.__class__ = Player.MY_TTS_State
 	val = state.basic_static_eval()
 	assert(val == 3)
-	print(" 1.1 basic static eval worked and returned the expected value ✓")	
+	print(" 1.1 basic static eval worked and returned the expected value ✓")
 except Exception:
 	print(" 1.2 an exception happened when trying to call your basic static eval:")
 	traceback.print_exc()
@@ -49,7 +49,7 @@ try:
 	state = TTS_State.TTS_State(board)
 	state.__class__ = Player.MY_TTS_State
 	val = state.custom_static_eval()
-	print(" 1.2 custom static eval returned a value without error ✓")	
+	print(" 1.2 custom static eval returned a value without error ✓")
 except Exception:
 	print(" 1.2 an exception happened when trying to call your custom static eval:")
 	traceback.print_exc()
