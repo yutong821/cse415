@@ -8,7 +8,7 @@ but which adds the following:
 1. A set of actions.
 
 2. general uncertainty in the effects of actions ("noise").
- 
+
 3. A specific probability distribution for each (s,a) pair,
 over the set of possible new states s'.
 This is implemented as the function T(s,a,sp) # sp = s'.
@@ -28,14 +28,14 @@ are handled here in a function called MDP_command.
 
 This version adds support for displaying the golden path (solution path).
 Version 0.7b fixed an error when selecting Use Exploration Function on the menu.)
- 
+
 As in other recent versions, this version includes hooks to run a script
 and for doing comparisons of the results of Q-Learning with results of
 Value Iteration.
 
 '''
 
-import YourUWNetID_VI as VI
+import yliu21_VI as VI
 import YourUWNetID_Q_Learn as Q_Learn
 
 from TowersOfHanoi import *
@@ -94,7 +94,7 @@ def generate_all_states():
       pass
     COUNT += 1
 
-# STEP 4. Generate the list L of successors of S and delete 
+# STEP 4. Generate the list L of successors of S and delete
 #         from L those states already appearing on CLOSED.
     L = []
     adj_lst = []
@@ -162,14 +162,14 @@ def T(s, a, sp):  # Here is the heart of the MDP: its transition model.
 
   If noise, an action has 0.8 chance of it being applied and 0.2 chance
   that some other state is chosen at random from the set of remaining
-  sucessors and the current state.  
+  sucessors and the current state.
   '''
   #print("Computing T(s,a,sp) for s="+str(s)+"; a='"+a+"; sp="+str(sp))
 # Handle goal state transitions first...
   if is_valid_goal_state(s):
     if a=="Exit" and sp == Terminal_state: return 1.0
     else: return 0.0
-    
+
 #  if goal_test(s):
 #    if a=="Exit" and sp == Terminal_state: return 1.0
 #    else: return 0.0
@@ -198,7 +198,7 @@ def T(s, a, sp):  # Here is the heart of the MDP: its transition model.
 # Handle remaining
   if sp in poss_new_states:
     return noise_share
-# Otherwise, we must be looking at a state sp not near s.  
+# Otherwise, we must be looking at a state sp not near s.
   return 0.0
 
 def R(s, a, sp):
@@ -418,7 +418,7 @@ def MDP_command(cmd, param):
       initialize_episode()
     elif param==1:
       a = VI.apply_policy(Agent_state)
-      Agent_turn(a)      
+      Agent_turn(a)
     else:
       Vis.TK_Canvas.after(10, lambda: run_Agent(param))
   if cmd=="QLearn":
@@ -446,7 +446,7 @@ def MDP_command(cmd, param):
 #      a = Q_Learn.choose_next_action(Agent_state, LAST_REWARD, TERMINATED)
 #      Agent_turn(a)
 #      increment_transition_count()
-    elif param>0: # Perform up to n transitions of Q learning. 
+    elif param>0: # Perform up to n transitions of Q learning.
       for i in range(param):
         a = Q_Learn.choose_next_action(Agent_state, LAST_REWARD, TERMINATED)
         Agent_turn(a)
@@ -515,7 +515,7 @@ def MDP_command(cmd, param):
     update_policy_displays(which="both")
   if cmd=="show_golden_path":
     Vis.show_golden_path()
- 
+
   #else: print("Unknown command: "+command+" with parameter: "+str(param))
 
 def update_policy_displays(which="both"): # "VI" or "QL" or "both"
@@ -614,15 +614,15 @@ def train_until(criterion="Policy match on golden path", threshold=100, max_iter
     print("Use one of the following strings instead:")
     for s in CFS: print(s);
     return
-    
+
   iter_no = train_quietly(max_iterations, check_for_convergence=cf)
   if cf():
     print("The convergence criterion has been satisfied at iteration "+str(iter_no))
   else:
     print("No convergence yet after "+str(iter_no)+" iterations.")
-    
-    
-  
+
+
+
 
 
 def simulate(s, a):
@@ -688,7 +688,7 @@ def user_drives_agent_via_text_input():
       increment_transition_count()
     except: print("Unrecognized action.  Retry ...")
     Vis.TK_Canvas.update_idletasks()
-    
+
 # The following code creates states and displays them.
 # It also demonstrates how to show values on the states,
 # draw a text label, and highlight a particular state.
@@ -749,7 +749,7 @@ def compute_V_from_QL():
           if q > maxval: maxval = q
         except: pass
       V_from_QL[s] = maxval
-      
+
 def update_q_value(s, a, value):
   global QUIET_MODE
   #sa_key=Vis.make_sa_key(s, a)
@@ -800,13 +800,13 @@ def compare_policies(pi1, pi2):
   compare Value Iteration with Q Learning.'''
   nmatches = 0
   for s in CLOSED:
-    try: 
+    try:
       if pi1[s]==pi2[s]: nmatches += 1
     except: pass
   match_val = 100 * nmatches / len(CLOSED)
   print("The two policies match percentage is "+str(match_val))
   return match_val
-  
+
 def init_Q_Learn_if_needed():
   global NEED_Q_LEARN_SETUP, ALL_STATES, ACTIONS, Q_from_QL, update_q_value
   global is_valid_goal_state, Terminal_state
@@ -816,7 +816,7 @@ def init_Q_Learn_if_needed():
       update_qlearn_params()
       Vis.enable_QL_policy_item(True)
       NEED_Q_LEARN_SETUP = False
-  
+
 def set_all_parameters(ndisks=3, noise=0.2, ngoals=1, living_reward=0, gamma=1,\
                        alpha = 0.1, epsilon=0.1):
   '''This is a stub for a function that could support testing under conditions controlled
@@ -887,7 +887,7 @@ def make_solution_path(path_type="golden"):
    #print(path_type+" path is: ")
    #for s in path: print(str(s))
    return path
-           
+
 set_up_state_space()
 
 def get_all_states():
@@ -901,7 +901,7 @@ def get_golden_path():
 def get_silver_path():
   global SILVER_PATH
   return SILVER_PATH
-      
+
 def testT():
    '''This is a sort of unit test for the T function, which represents the
    transition model of the MDP.'''
